@@ -1,0 +1,26 @@
+server:
+  port: 8304
+
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      server.port: 8080
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/mine
+    driver-class-name: org.h2.Driver
+    username: sa
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
+
+
+
