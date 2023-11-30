@@ -32,7 +32,6 @@ import java.util.stream.Collectors;
 public class UServices {
 
 
-    private final AuthenticationManager authenticationManager;
     private final UReposit reposit;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final Uuser uuser;
@@ -52,14 +51,14 @@ public class UServices {
         dto.setPass(enpass);
         reposit.save(dto.toEntity());
 
-        System.out.println("됬다");
+        System.out.println("회원가입 완료");
         return ResponseEntity.ok().body(dto);
     }
 
     private void valideuser(String email){
         Optional<Uuser> uuser1 = reposit.findByemail(email);
         if(uuser1.isPresent()){
-            throw new RuntimeException("이미 있잖아");
+            throw new RuntimeException("이미 있는 계정입니다.");
         }
     }
 
@@ -72,7 +71,7 @@ public class UServices {
             if(bCryptPasswordEncoder.matches(dto.getPass(), uuser.getPass())){
                 System.out.println("토큰 발급중");
                 String token = Tokengiver.createjwt(uuser);
-                System.out.println("토큰이 발급완료");
+                System.out.println("토큰 발급완료: "+token);
 
                 uuser.setJwt(token);
                 reposit.save(uuser);
@@ -80,7 +79,7 @@ public class UServices {
                 return optionalUser.get();
             }
             else {
-                throw new RuntimeException("비번이 틀렸쥬");
+                throw new RuntimeException("패스워드 오류");
             }
         }
         else {
@@ -112,21 +111,17 @@ public class UServices {
             JsonNode re_token = token.get("refresh_token");
             session.setAttribute("access_token",access_token.asText());
 
-
-            System.out.println("니 토큰: "+ access_token.asText()+"\n니 리프레시 토큰: "+ re_token.asText());
-
-
             JsonNode userinfo = getInfo(access_token);
             JsonNode properties = userinfo.path("properties");
             JsonNode kakaoinfo = userinfo.path("kakao_account");
             String enpass = bCryptPasswordEncoder.encode(userinfo.get("id").asText());
 
-            System.out.println("-------------도용당한 니 정보----------------");
+            System.out.println("-------------정보----------------");
 
             System.out.println("PK: " + userinfo.get("id").asText());
             System.out.println("이름 : " + properties.path("nickname").asText());
-            System.out.println("니얼굴 : " + properties.path("profile_image").asText());
-            System.out.println("니이메일 : " + kakaoinfo.path("email").asText());
+            System.out.println("프로필 : " + properties.path("profile_image").asText());
+            System.out.println("이메일 : " + kakaoinfo.path("email").asText());
 
             if(reposit.findByemail(kakaoinfo.get("email").asText()).isPresent()){
                 System.out.println("까까오로그인 완료");
@@ -165,7 +160,7 @@ public class UServices {
             System.out.println("RequestURL: " + RequestURL);
             System.out.println(postParams);
             System.out.println(response.getStatusLine().getStatusCode());
-            System.out.println("토큰이 요기잉네");
+            System.out.println("카톡 토큰 발급중");
 
             return jsonResponse(response);
 
@@ -184,8 +179,6 @@ public class UServices {
             post.addHeader("Authorization", "Bearer "+ accessToken);
 
             final HttpResponse response = client.execute(post);
-
-            System.out.println("니정보 빼옴");
 
             return jsonResponse(response);
         }catch (Exception e){

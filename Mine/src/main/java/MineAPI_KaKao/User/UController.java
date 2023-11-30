@@ -26,21 +26,15 @@ public class UController {
     public ResponseEntity<?> signup(@RequestBody UserDto.Dto dto){
 
     UServices.join(dto);
-        String a = dto.getPass();
-        String b = dto.getName();
-        String c = dto.getEmail();
-        String d = dto.getPhoto();
+        String d = dto.getJwt();
 
-
-    System.out.println("헤헤 니정보다: "+a+b+c+d);
 
     return ResponseEntity.ok(dto);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserDto.Dto dto, Model model){
+    public ResponseEntity<?> login(@RequestBody UserDto.Dto dto){
         Uuser loginresult = UServices.login(dto);
-        model.addAttribute("jwt",loginresult);
         System.out.println("로그인시도: "+loginresult.getName());
 
 

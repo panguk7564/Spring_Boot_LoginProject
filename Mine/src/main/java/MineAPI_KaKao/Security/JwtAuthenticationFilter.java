@@ -78,6 +78,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         }
         catch (TokenExpiredException tee) {
             log.debug("토큰 사용 만료");
+            System.out.println("토큰 사용 만료");
         } finally {
             // ** 필터로 응답을 넘긴다.
             chain.doFilter(request, response);

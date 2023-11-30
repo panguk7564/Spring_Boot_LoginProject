@@ -20,13 +20,13 @@ public class UserDto {
 
         private int id;
 
-        @NotEmpty(message = "이름없음?")
+        @NotEmpty
         private String name;
 
-        @NotEmpty(message = "패스워드적어야됨")
+        @NotEmpty
         private String pass;
 
-        @NotEmpty(message = "이메일 어디갔노?")
+        @NotEmpty
         private String email;
 
         private String photo;
