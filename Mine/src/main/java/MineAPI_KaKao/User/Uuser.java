@@ -2,7 +2,10 @@ package MineAPI_KaKao.User;
 
 
 import MineAPI_KaKao.Util.StringArrayConverter;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,37 +16,37 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_tb")
-public class Uuser {
+public class Uuser { //-- 사용자 테이블
 
-    @Id
+    @Id // -- PK
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false, unique = true)
-    private String email;
+    private String email; // -- 이메일(로그인 ID)
 
     @Column
-    private String name;
+    private String name; // -- 이름
 
     @Column(nullable = false)
-    private String pass;
+    private String pass; // -- Password
 
     @Column
-    private String photo;
+    private String photo; // -- 프로필 사진
 
     @Column(length = 30)
     @Convert(converter = StringArrayConverter.class)
-    private List<String> roles = new ArrayList<>();
+    private List<String> roles = new ArrayList<>(); // -- 유저 권한
 
     @Column
-    private String jwt;
+    private String jwt; // --- JWT 저장 컬럼
 
     @Column
-    private String re_token;
+    private String re_token; // -- 리프레시 토큰
 
 
     @Builder
-    public Uuser(String jwt,String re_token,int id, String email, String pass, String name, String photo, List<String> roles) {
+    public Uuser(String jwt,String re_token,int id, String email, String pass, String name, String photo, List<String> roles) { //-- 빌더구현
         this.id = id;
         this.email = email;
         this.pass = pass;
@@ -54,15 +57,4 @@ public class Uuser {
         this.re_token = re_token;
     }
 
-    public static UserDto showuser(Uuser uuser) {
-        UserDto userDto = new UserDto();
-        userDto.setId(uuser.getId());
-        userDto.setEmail(uuser.getEmail());
-        userDto.setPass(uuser.getPass());
-        userDto.setName(uuser.getName());
-        userDto.setPhoto(uuser.getPhoto());
-
-        return userDto;
-
-    }
 }

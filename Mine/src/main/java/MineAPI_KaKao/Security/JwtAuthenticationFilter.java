@@ -7,7 +7,6 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,13 +27,12 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         super(authenticationManager);
     }
 
-    // ** Http 요청이 발생할 때마다 호출되는 메서드.
+    // ** Http 요청이 발생할 때마다 호출
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         String prefixJwt = request.getHeader(Tokengiver.HEADER);
         System.out.println("필터 작동중"+ "  토큰:"+prefixJwt);
-
 
         if(prefixJwt == null) {
             chain.doFilter(request, response);

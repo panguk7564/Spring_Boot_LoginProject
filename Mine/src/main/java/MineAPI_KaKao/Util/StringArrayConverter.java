@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StringArrayConverter implements AttributeConverter<List<String>, String> {
+public class StringArrayConverter implements AttributeConverter<List<String>, String> { // -- 문자열 리스트로 변환
     private static final String SPLIT_CHAR = ",";
 
     @Override

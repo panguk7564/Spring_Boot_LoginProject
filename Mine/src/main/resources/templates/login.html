@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
@@ -40,7 +40,7 @@
        var xhr = new XMLHttpRequest();
        xhr.open('POST', '/login');
        xhr.setRequestHeader('Content-Type', 'application/json');
-       xhr.setRequestHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLquYDrtInsi50iLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjozNywiZXhwIjoxNzAxMzI4MzA2fQ.ZT2EfFyE8RiQRVwwOzfEMa3A5ZxfZnarLxt7ieEULb2XqGlXkAGgcgtBxa9df-bElWX1fFNvbc-SUzjmVbjowA');
+       xhr.setRequestHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLquYDrtInsi50iLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlkIjo0MiwiZXhwIjoxNzAxNDA2NzM3fQ.jpmVMNkM3-afj0j3yO0AkgqeAO2Rx-L87V7hCLsZ71pnz2Slz7argBMHNfolblBEyVyObU2YJkNe_jROHJ84Uw');
        xhr.onload = function() {
            if (xhr.status === 200) {
 

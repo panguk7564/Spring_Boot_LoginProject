@@ -2,91 +2,40 @@ package MineAPI_KaKao.User;
 
 import MineAPI_KaKao.Security.Tokengiver;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequiredArgsConstructor
-public class UController {
+public class UController { // -- JSON 데이터를 반환하는 CONTROLLER
 
-    private final UServices UServices;
+    private final UServices UServices; // -- 서비스 호출
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody UserDto.Dto dto){
+    @PostMapping("/signup") // -- 회원가입
+    public ResponseEntity<?> signup(@RequestBody UserDto dto){ // -- 입력된 본문에 포함된 내용을 객체화
 
     UServices.join(dto);
-        String d = dto.getJwt();
-
 
     return ResponseEntity.ok(dto);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserDto.Dto dto){
-        Uuser loginresult = UServices.login(dto);
+    @PostMapping("/login") // 로그인
+    public ResponseEntity<?> login(@RequestBody UserDto dto){
+        Uuser loginresult = UServices.login(dto); //-- 사용자의 정보가 일치하는지 판단
+
         System.out.println("로그인시도: "+loginresult.getName());
 
 
         if(loginresult != null){
-            System.out.println("어서오시게");
+            System.out.println("어서오시게"); // -- 로그인 성공 응답
             return ResponseEntity.ok().header(Tokengiver.HEADER,loginresult.getJwt()).body("로그인 한 유저: "+loginresult.getName());
-        }
+        } //-- 응답객체 (토큰, 엔티티))
         else {
-            System.out.println("틀렸음");
+            System.out.println("틀렸음"); // -- 로그인 실패
             return ResponseEntity.badRequest().build();
         }
     }
-
-    @GetMapping(value="/kakao/oauth")
-    public String kakaoConnect() {
-        return "redirect:" + UServices.kakaoConnect();
-    }
-
-    @GetMapping(value = "/kakaologin",produces ="application/json")
-    public String kakaoLogin(@RequestParam("code")String code, Error error, HttpSession session, HttpServletRequest req, HttpServletResponse res) {
-        UServices.Kakaologin(code,session);
-        return "main";
-    }
-
-
-    @GetMapping("/mem")
-    public String findmem(Model model){
-        List<Uuser> memlist = UServices.findall();
-        model.addAttribute("userlist", memlist);
-        return "mem";
-    }
-    @GetMapping("/mem/{id}")
-    public String findbyId(@PathVariable int id, Model model){
-        Uuser userDto = UServices.findByid(id);
-        model.addAttribute("users",userDto);
-        System.out.println(id);
-        return "details";
-    }
-
-    @GetMapping("/mem/delete/{id}")
-    public String deleteById(@PathVariable int id){
-        UServices.deleteById(id);
-        return "redirect:/mem/";
-    }
-
-    @GetMapping("/signout")
-    public String logout(HttpSession session){
-        UServices.unAuthorize(37);
-        session.invalidate();
-        return "redirect:/";
-    }
-
-
-
 }
