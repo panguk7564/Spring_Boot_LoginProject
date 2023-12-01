@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Collections;
 
 @Data
-public class UserDto {
+public class UserDto { // --  데이터 전송 객체
 
         @NotEmpty // == NOT NULL
         private int id;

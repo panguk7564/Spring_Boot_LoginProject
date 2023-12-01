@@ -1,5 +1,7 @@
-package MineAPI_KaKao.User;
+package MineAPI_KaKao.COntrollers;
 
+import MineAPI_KaKao.User.UServices;
+import MineAPI_KaKao.User.Uuser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class IndexController { // -- HTML 전환 위주의 Controller
 
-    private final UServices UServices;
+    private final MineAPI_KaKao.User.UServices UServices;
 
     @GetMapping("/")
     public String main(){

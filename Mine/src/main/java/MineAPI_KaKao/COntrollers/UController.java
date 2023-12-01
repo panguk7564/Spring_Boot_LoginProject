@@ -1,6 +1,9 @@
-package MineAPI_KaKao.User;
+package MineAPI_KaKao.COntrollers;
 
 import MineAPI_KaKao.Security.Tokengiver;
+import MineAPI_KaKao.User.UServices;
+import MineAPI_KaKao.User.UserDto;
+import MineAPI_KaKao.User.Uuser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UController { // -- JSON 데이터를 반환하는 CONTROLLER
 
-    private final UServices UServices; // -- 서비스 호출
+    private final MineAPI_KaKao.User.UServices UServices; // -- 서비스 호출
 
     @PostMapping("/signup") // -- 회원가입
     public ResponseEntity<?> signup(@RequestBody UserDto dto){ // -- 입력된 본문에 포함된 내용을 객체화

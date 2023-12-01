@@ -28,7 +28,7 @@ public class Tokengiver { // -- jwt 발급
                 uuser.getRoles()
         );
 
-        String jwt = JWT.create()
+        String jwt = JWT.create() // -- 유저 객체의 정보가담긴 jwt 생성
                 .withSubject(uuser.getName())
                 .withExpiresAt(new Date(System.currentTimeMillis() + exp))
                 .withClaim("id", uuser.getId())
@@ -51,7 +51,7 @@ public class Tokengiver { // -- jwt 발급
         return decodedJWT;
     }
 
-    private String getUsername(String accessToken) {
+    private String getUsername(String accessToken) { // -- 토큰에서 유저 정보 추출
         return Jwts.parser()
                 .setSigningKey(SECRET)
                 .parseClaimsJws(accessToken)

@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Getter
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails { // -- 사용자 정보가 담긴객체
     private final Uuser user;
     
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() { // -- 유저의 권한을 리스트로 가져옴
         return this.user.getRoles().stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
@@ -24,7 +24,7 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getPassword() {
         return this.user.getPass();
-    }
+    } // -- 유저정보 ---
 
     @Override
     public String getUsername() {
