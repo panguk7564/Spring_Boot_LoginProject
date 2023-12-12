@@ -35,12 +35,6 @@ public class IndexController { // -- HTML 전환 위주의 Controller
         return "login"; // templates/login.html을 반환
     }
 
-
-    @GetMapping("/img")
-    public String img(){
-        return  "img";
-    }
-
     @GetMapping("/main") // -- 로그인후 표시되는 화면(메인화면)
     public String logined(){
         return  "main";
